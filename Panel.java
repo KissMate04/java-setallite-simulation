@@ -16,10 +16,10 @@ public class Panel extends JPanel {
         setBackground(Color.BLACK);
 
         planet = new SpaceObject((float)WIDTH / 2,(float)HEIGHT / 2,0,0,60000,200,Color.BLUE);
-        double r1 = planet.x + planet.radius + 50;
+        double orbitRadius = planet.radius + 50;
         satellites = new ArrayList<SpaceObject>();
         for (int i = 0; i < 6; i++) {
-            satellites.add(new SpaceObject(r1,planet.y + i*10,0,Math.sqrt(G * planet.mass / r1),0.6, 5,Color.GRAY));
+            satellites.add(new SpaceObject(planet.x + orbitRadius,planet.y + i*10,0,Math.sqrt(G * planet.mass / orbitRadius),0.6, 5,Color.GRAY));
         }
     }
     @Override
@@ -43,11 +43,23 @@ public class Panel extends JPanel {
                 2, 20);
         g.drawString("Number of satellites: "+satellites.size(),
                 2, 40);
+        double speed = Math.sqrt(satellites.getFirst().vx * satellites.getFirst().vx + satellites.getFirst().vy * satellites.getFirst().vy);
+        g.drawString("Circular orbit sat speed: "+ speed,
+                2, 60);
+        speed = Math.sqrt(satellites.get(1).vx * satellites.get(1).vx + satellites.get(1).vy * satellites.get(1).vy);
+        g.drawString("Elliptical orbit sat speed: "+ speed,
+                2, 80);
     }
 
     public void update() {
         for (SpaceObject sat : satellites) {
             sat.update(planet.x, planet.y, planet.mass);
+        }
+    }
+    public void addTrailPoints() {
+        for (SpaceObject sat : satellites) {
+            sat.addTrailPoint();
+
         }
     }
 }
