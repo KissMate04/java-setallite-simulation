@@ -16,11 +16,9 @@ public class SpaceObject {
         this.radius = radius;
         this.color = color;
     }
-    public void paint(Graphics2D g2d, int centerX, int centerY) {
+    public void paint(Graphics2D g2d) {
         g2d.setColor(color);
-        int screenX = centerX + (int)(x - radius);
-        int screenY = centerY + (int)(y - radius);
-        g2d.fillOval(screenX,screenY,(int)radius*2, (int)radius*2);
+        g2d.fillOval((int)(x-radius),(int)(y-radius),(int)radius*2, (int)radius*2);
     }
     public void update(double px, double py, double pmass) {
         double dx = px - x;
